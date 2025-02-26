@@ -1,0 +1,40 @@
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment folder (commonly named 'venv', 'env', or '.env')
+venv/
+env/
+.env/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+db.sqlite3
+
+# Django migrations (optional, depends on whether you want to track them)
+migrations/
+
+# Static files (if using Django's collectstatic command)
+static/
+
+# Media files (if storing media files outside of a database)
+media/
+
+# IDE and editor-specific files (e.g., VSCode, PyCharm, Sublime Text, etc.)
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Operating system-specific files
+.DS_Store
+Thumbs.db
+
+# Environment-specific config files (e.g., if you have a custom config file for production)
+*.env
