@@ -34,13 +34,22 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'corsheaders',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user'
+    'user', 
+    'group_chat', # when a group is created i.e name admin etc
+    'group_users', # for each user, we create this to link the group when a user is joined
+    'message', # message
+    'two_way_chat', # same as group_chat but for not group
+    'two_way_users', # same as group_users but for not group
+    'message_status' # message status for each reciever (pending,delivered,seen)
+    # We are not saving participants in array in model, instead we are creating two-way-users and group-users that represent a user having this group or chat
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +58,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# csrf and cors
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Allow React frontend
+]
+
+# If you want to allow all domains (Not recommended for production)
+# CORS_ALLOW_ALL_ORIGINS = True  
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']  # Allow React frontend
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True  # Set to True in production (HTTPS only)
+CSRF_COOKIE_HTTPONLY = False  # React needs to access it
+CSRF_COOKIE_SAMESITE = "None"  # Prevent CSRF attacks
 
 ROOT_URLCONF = 'Chat.urls'
 

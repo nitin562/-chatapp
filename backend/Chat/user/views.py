@@ -1,5 +1,5 @@
 
-from django.shortcuts import render
+from django.middleware.csrf import get_token
 from django.http import JsonResponse
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
@@ -8,8 +8,9 @@ from .forms import UserForm,LoginForm
 from django.contrib.auth.models import User
 from .token import createJWT
 from Chat.Responses import success,failure
+import json
 # Create your views here.
-@method_decorator(csrf_exempt,name="dispatch")
+# @method_decorator(csrf_exempt,name="dispatch")
 class user_add_view(View):
   def post(self,request,*args, **kwargs):
     form=UserForm(request.POST,request.FILES)
@@ -36,11 +37,14 @@ class user_add_view(View):
       print(form.cleaned_data.get("profile_pic"))
       return JsonResponse(failure(400,form.errors.get_json_data()).to_dict())
     
-@method_decorator(csrf_exempt,name="dispatch")
+# @method_decorator(csrf_exempt,name="dispatch")
 class login_view(View):
   def post(self,request,*args,**kwargs):
-    form=LoginForm(request.POST)
-    print(request.POST)
+    # here post data is json data but it is stringified
+    
+    data=json.loads(request.body)
+    form=LoginForm(data)
+    
     if form.is_valid():
       user=form.authenticate()
       if(not user):
@@ -56,7 +60,12 @@ class login_view(View):
     else:
       return JsonResponse(failure(400,form.errors.get_json_data()).to_dict())
 
-      
+
+def getCsrfToken(request):
+  if request.method=="GET":
+      csrftoken=get_token(request)
+      print(csrftoken)
+      return JsonResponse(success(200,csrftoken).to_dict()) 
       
       
     
