@@ -9,3 +9,21 @@
     background-size: cover;
     inset:0;
 }
+.scrollbar{
+    overflow: hidden auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 0.3rem;
+
+}
+.scrollbar::-webkit-scrollbar-track {
+  width: 0.1rem;
+  background-color: rgba(245, 236, 237, 0.01);
+  border-radius: 3rem;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  width: 0.05rem;
+  background-color: #01489e;
+  border-radius: 2.5rem;
+}

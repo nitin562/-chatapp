@@ -17,9 +17,10 @@ Including another URLconf
 
 
 from django.urls import path,include
-from .views import user_add_view,login_view,getCsrfToken
+from .views import user_add_view,login_view,getCsrfToken,user_manipulate
 urlpatterns = [
     path('register/',user_add_view.as_view(),name="register"),
     path('login/',login_view.as_view(),name="login"),
-    path('csrf_token/',getCsrfToken,name="csrf_token")
+    path('csrf_token/',getCsrfToken,name="csrf_token"),
+    path("profile/",user_manipulate.as_view(),name="user")
 ]

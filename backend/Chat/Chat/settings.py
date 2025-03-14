@@ -26,11 +26,13 @@ SECRET_KEY = 'django-insecure-7#2+^e*@6&0br3n$eh3xko85!*+-!+-vpyrxjwt9v^s%a&x08o
 DEBUG = True
 
 ALLOWED_HOSTS = []
+APPEND_SLASH=True
 
 
 # Application definition
-
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'user.middleware.JWT_AuthMiddleWare'
 ]
 
 # csrf and cors
@@ -91,7 +94,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Chat.wsgi.application'
+# WSGI_APPLICATION = 'Chat.wsgi.application'
+ASGI_APPLICATION = 'Chat.asgi.application'
 
 
 # Database

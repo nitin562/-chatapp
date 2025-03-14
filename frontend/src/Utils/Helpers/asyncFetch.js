@@ -4,7 +4,7 @@ export const asyncFetch=async(method,url,extra_headers={},extra_body=null,csrf=n
             ...extra_headers
         }
         if(isJWT){
-            headers["X-Authorization"]=localStorage.getItem("token")
+            headers["Authorization"]=`Bearer ${localStorage.getItem("token")}`
         }
         if(csrf){
             headers["X-CSRFTOKEN"]=csrf

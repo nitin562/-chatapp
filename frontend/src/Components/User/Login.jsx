@@ -87,7 +87,7 @@ export default function Login() {
       reject(1)
       return;
     }
-    localStorage.setItem("token",result.payload)
+    localStorage.setItem("token",result.payload.token)
     resolve(1)
     
   };

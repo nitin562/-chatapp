@@ -13,6 +13,18 @@ class UserForm(forms.ModelForm):
     email=forms.EmailField(max_length=50)
     password=forms.CharField(widget=forms.PasswordInput)
     
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance=kwargs.pop("instance",None)
+
+        if instance: # instance is django user instance
+            print(instance)
+            self.fields["description"].initial=instance.custom.description
+            self.fields["profile_pic"].initial=instance.custom.profile_pic
+            self.fields["email"].initial=instance.email
+            self.fields["username"].initial=instance.username
+            self.fields["first_name"].initial=instance.first_name
+            self.fields["last_name"].initial=instance.last_name
     
     def clean_email(self):
         email = self.cleaned_data.get("email")

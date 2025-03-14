@@ -10,7 +10,7 @@ import { asyncFetch } from '../../Utils/Helpers/asyncFetch';
 import { get_csrf_token } from '../../Utils/Helpers/getCSRF';
 import { useGlobal } from '../../Utils/Context/Global';
 import { getFormErrors } from '../../Utils/Validations/GetErrors';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export default function Register() {
     const [formValue, setformValue] = useState({
         username:"",
@@ -21,6 +21,7 @@ export default function Register() {
         description:"",
         profile_pic:null
     })
+    const nav=useNavigate()
      const toast=useGlobal().toast
     const [FormErrors, setFormErrors] = useState({})
     const [profile_pic_dataURL, setProfile_pic_dataURL] = useState("./user.png")
@@ -29,6 +30,7 @@ export default function Register() {
         setformValue(prev=>{
             const obj={...prev}
             obj[name]=value;
+            console.log(obj)
             return obj;
         })
     }
@@ -98,7 +100,7 @@ export default function Register() {
             reject("Form Values Contraints breaked")
             return;
         }
-        localStorage.setItem("token",result.payload)
+        localStorage.setItem("token",result.payload.token)
         setpage(2)
         resolve(1)
         
@@ -156,11 +158,12 @@ export default function Register() {
     }
     const handleImageUpload=(e)=>{
         if(e.target.files.length<=0){
-            custom_set_value("profile_pic",null)
+            custom_set_value(null,"profile_pic")
             setProfile_pic_dataURL("./user.png")
             return
         }
-        custom_set_value("profile_pic",e.target.files[0])
+        console.log(e.target.files[0])
+        custom_set_value(e.target.files[0],"profile_pic")
         const fileReader=new FileReader()
         fileReader.onload=(file)=>{
             setProfile_pic_dataURL(file.target.result)

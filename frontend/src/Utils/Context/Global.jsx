@@ -10,7 +10,7 @@ const ContextProvider=(props)=>{
         render:(e)=><Notification title={e.title} closeBtn={e.isClosable} desc={e.description} status={e.status} onclose={e.onClose}/>,
     })
     
- 
+    
    
 
     return(
