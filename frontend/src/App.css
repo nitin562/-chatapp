@@ -27,3 +27,26 @@
   background-color: #01489e;
   border-radius: 2.5rem;
 }
+
+.rotateThroughLeft{
+  animation: rotateLeft 0.3s ease forwards;
+}
+.rotateThroughRight{
+  animation: rotateRight 0.3s ease forwards;
+}
+@keyframes rotateLeft {
+  0%{
+    transform: rotate(90deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}
+@keyframes rotateRight {
+  0%{
+    transform: rotate(-90deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}

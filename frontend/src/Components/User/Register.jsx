@@ -6,12 +6,14 @@ import { IoMail,IoKeySharp  } from "react-icons/io5";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import Drawer from '../../Utils/Drawer';
 import { apiLinks } from '../../links';
-import { asyncFetch } from '../../Utils/Helpers/asyncFetch';
+
 import { get_csrf_token } from '../../Utils/Helpers/getCSRF';
 import { useGlobal } from '../../Utils/Context/Global';
 import { getFormErrors } from '../../Utils/Validations/GetErrors';
 import { Link, useNavigate } from 'react-router-dom';
+import { useFetch } from '../../Utils/Helpers/UseFetch';
 export default function Register() {
+    const asyncFetch=useFetch()
     const [formValue, setformValue] = useState({
         username:"",
         email:"",
@@ -110,36 +112,37 @@ export default function Register() {
             const toastPromise=new Promise((resolve,reject)=>{
                 handleRegister(e,resolve,reject)
               })
-              toast.promise(toastPromise,{
-                success:{
-                  title:"Login Completed",
-                  description:"Redirecting to Chats...",
-                  duration:3000,
-                  autoclosable:true,
-                  variant:"subtle",
-                  position:'bottom-right',
-                  onCloseComplete:()=>nav("/chat"),
-                  isClosable:true,
-                },
-                error:(err)=>({
-                  title:"Login Failed",
-                  description:err||"Please Try Again",
-                  variant:"subtle",
-                  position:'bottom-right',
-                  autoclosable:true,
-          
-                  duration:3000,
-                  isClosable:true,
-                }),
-                loading:{
-                  title:"Processing",
-                  description:"Please wait for a while",
-                  variant:"subtle",
-                  position:'bottom-right',
-          
-                },
-          
-              })
+            toast.promise(toastPromise,{
+            success:{
+                title:"Login Completed",
+                description:"Redirecting to Chats...",
+                duration:3000,
+                autoclosable:true,
+                variant:"subtle",
+                position:'bottom-right',
+                onCloseComplete:()=>nav("/chat"),
+                isClosable:true,
+            },
+            error:(err)=>({
+                title:"Login Failed",
+                description:err||"Please Try Again",
+                variant:"subtle",
+                position:'bottom-right',
+                autoclosable:true,
+        
+                duration:3000,
+                isClosable:true,
+            }),
+            loading:{
+                title:"Processing",
+                description:"Please wait for a while",
+                variant:"subtle",
+                position:'bottom-right',
+        
+            },
+        
+            })
+            setpage(2)
         }
         else{
             setpage(prev=>{
@@ -173,7 +176,7 @@ export default function Register() {
     }
   return (
     <div className='relative w-screen h-screen bg-before before:bg-[url("./register.jpg")] z-10 before:opacity-35 bg-[#000000] flex justify-center items-center'>
-        <form onSubmit={(e)=>e.preventDefault()} action="#" className='w-full h-full  md:w-[60%] overflow-x-hidden flex flex-col  items-center justify-center' >
+        <form onSubmit={(e)=>e.preventDefault()} action="#" className='w-full h-full  md:w-[60%] p-2 md:p-0 overflow-x-hidden flex flex-col  items-center justify-center' >
             {/* part - Text Field */}
             <div className='w-full flex-1 flex flex-col transition-all duration-500 items-center justify-center gap-4 p-2' style={{display:`${page==1?"flex":"none"}`}}>
                 <img src="./logo.png" alt="Logo" className='w-[8rem] object-contain my-4 mb-6'/>

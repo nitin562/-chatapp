@@ -6,11 +6,13 @@ import { CiUser, CiMail } from "react-icons/ci";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsCardText } from "react-icons/bs";
 import ProfileDataShow from "../../../../Utils/ProfileDataShow";
-import { asyncFetch } from "../../../../Utils/Helpers/asyncFetch";
+
 import { get_csrf_token } from "../../../../Utils/Helpers/getCSRF";
 import { useGlobal } from "../../../../Utils/Context/Global";
 import { updateUser } from "../../../../Redux/slice/user";
+import { useFetch } from "../../../../Utils/Helpers/UseFetch";
 export default function Profile() {
+  const asyncFetch=useFetch()
   const [updatedPic, setupdatedPic] = useState(null);
   const user = useSelector((state) => state.user.user);
   console.log(user);
@@ -80,25 +82,16 @@ export default function Profile() {
     }
     return null;
   };
-  useEffect(() => {
-    console.log("Changed", user);
-  }, [user]);
 
   return (
-    <div className="flex flex-col flex-1 h-full scrollbar">
-      <span className="text-2xl text-white font-bold m-4">Profile</span>
-      <div className="flex flex-col gap-4 flex-1 items-center justify-center h-full p-1">
-        <input
-          ref={profileRef}
-          onChange={handlePicSaveAndDisplay}
-          type="file"
-          className="hidden"
-          accept="image/*"
-          name="profile_pic"
-        />
+    <div className="flex flex-col h-full  w-full ">
+      <div className="w-full flex items-center justify-between p-4">
+        <span className="text-2xl font-bold text-white">Profile</span>
+      </div>
+      <div className="flex flex-col gap-4 items-center flex-1 justify-center p-1 scrollbar  ">
         <div
           onClick={handleProfilePicClick}
-          className="w-[10rem] h-[10rem] border-2 !border-blue-500/70 cursor-pointer rounded-full relative"
+          className="w-[10rem] h-[10rem] mt-6 border-2 !border-blue-500/70 cursor-pointer rounded-full relative"
         >
           <Avatar
             key={updatedPic || user.demographic.profile_pic}
@@ -106,9 +99,17 @@ export default function Profile() {
             src={completeUrl(updatedPic || user.demographic.profile_pic)}
           />
           <MdModeEditOutline className="absolute bottom-0 right-6 text-2xl bg-blue-500 rounded-full text-white p-1" />
+          <input
+          ref={profileRef}
+          onChange={handlePicSaveAndDisplay}
+          type="file"
+          className="hidden"
+          accept="image/*"
+          name="profile_pic"
+        />
         </div>
 
-        <div className="flex flex-col w-full items-center p-2 px-4 gap-7">
+        <div className="flex flex-col w-full items-center p-2 px-4 gap-7 ">
           <ProfileDataShow
             save={UpdateValue}
             Icon={CiUser}

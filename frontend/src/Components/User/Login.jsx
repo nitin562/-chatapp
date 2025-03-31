@@ -6,12 +6,14 @@ import { IoMail, IoKeySharp } from "react-icons/io5";
 import { GrFormNextLink } from "react-icons/gr";
 import { apiLinks } from "../../links";
 import { getFormErrors } from "../../Utils/Validations/GetErrors";
-import { asyncFetch } from "../../Utils/Helpers/asyncFetch";
+
 import { get_csrf_token } from "../../Utils/Helpers/getCSRF";
 import { useGlobal } from "../../Utils/Context/Global";
-import Notification from "../../Utils/Notification/Notification";
+
 import { Link, useNavigate } from "react-router-dom";
+import { useFetch } from "../../Utils/Helpers/UseFetch";
 export default function Login() {
+  const asyncFetch=useFetch()
   const [formValue, setformValue] = useState({
     user_or_email: "",
     password: "",
@@ -88,6 +90,7 @@ export default function Login() {
       return;
     }
     localStorage.setItem("token",result.payload.token)
+    
     resolve(1)
     
   };
@@ -131,7 +134,7 @@ export default function Login() {
       <form
         action="#"
         onSubmit={handleSubmit}
-        className="w-full h-full  md:w-[60%] gap-6 overflow-x-hidden flex flex-col  items-center justify-center"
+        className="w-full h-full p-2 md:p-0  md:w-[60%] gap-6 overflow-x-hidden flex flex-col  items-center justify-center"
       >
         {/* part - Text Field */}
 
@@ -172,13 +175,13 @@ export default function Login() {
         />
 
         <div className="flex flex-col w-full md:w-1/2 gap-4 items-end">
-          <div className="flex justify-between flex-wrap w-full gap-2">
-            <span
+          <div className="flex flex-col md:flex-row items-center md:justify-between  flex-wrap w-full gap-2">
+            <p
               className="text-orange-300 hover:text-orange-400 cursor-pointer"
               onClick={changeFilter_by}
             >
               Login With {formValue.filter_by == "email" ? "Username" : "Email"}
-            </span>
+            </p>
             <Link to="/register" className="text-blue-300 group">
               Don't have account?{" "}
               <span className="group-hover:text-blue-400">Register</span>
@@ -186,7 +189,7 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="group bg-blue-500 hover:bg-blue-500 cursor-pointer md:text-xl flex justify-center items-center p-2 w-[8rem] gap-3 text-white"
+            className="group mt-3 bg-blue-500 hover:bg-blue-500 cursor-pointer md:text-xl flex justify-center items-center p-2 w-[8rem] gap-3 text-white"
           >
             <span>Login</span>
             <GrFormNextLink className="rounded-full border-2" />
